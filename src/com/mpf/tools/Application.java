@@ -418,34 +418,23 @@ public class Application extends JFrame implements ActionListener {
 				if (!contains) {
 					// if a not a color name, check for hex color code
 					boolean isHex = light.matches("#?[0-9a-fA-F]{6}"); // should be a 6 digit hex number
+
 					if (!isHex) {
-						// if not hex, check if RGB value given in format [123, 34, 10]
-						if ((light.substring(0, 1).equalsIgnoreCase("[")
-								&& light.substring(light.length() - 1, light.length()).equalsIgnoreCase("]"))) {
-							String[] rgbCodes = light.substring(1, light.length() - 1).split(",");
-							if (rgbCodes.length == 3) // need exactly 3 values in array for RGB
-							{
-								for (int j = 0; j < rgbCodes.length; j++) {
-									try {
-										int rgbValue = Integer.parseInt(rgbCodes[j].strip());
-										if (rgbValue > 255 || rgbValue < 0) {
-											problems = problems + "- RGB values need to be in the range of 0...255: "
-													+ light + "\r\n";
-											break;
-										}
-									} catch (NumberFormatException numberException) {
-										problems = problems + "- Only integer values are allowed: " + light + "\r\n";
-										break;
-									}
+						int posBrightness = light.indexOf("%");
+						if (posBrightness > 5) { // could be a hex value with brightness
+							String brightness = light.substring(posBrightness + 1, light.length());
+							try {
+								Integer brightnessValue = Integer.valueOf(brightness);
+								if (brightnessValue > 100 || brightnessValue < 0) {
+									problems = problems + "- Brightness must be between 0 and 100: " + light + "\r\n";
 								}
-							} else {
-								problems = problems + "- You need exactly 3 comma separated values: " + light + "\r\n";
+							} catch (NumberFormatException e1) {
+								problems = problems + "- Problem with the brightness value, brightness must be a number: " + light + "\r\n";
 							}
 
 						} else {
 							problems = problems + "- This doesn't seem to be a known color code: " + light + "\r\n";
 						}
-
 					}
 				}
 			}
@@ -771,9 +760,11 @@ public class Application extends JFrame implements ActionListener {
 				for (int i = 0; i < lengthDiff; i++) { // remove lights from end of list
 					lightPatternList.remove(lightPatternList.size() - 1);
 				}
-				
-				JOptionPane.showMessageDialog(this, "You have specified " + lengthDiff + " more colors then lights. For this animation this is not possible.\r\n The excess colors have been removed.", "Warning", JOptionPane.WARNING_MESSAGE);
-				
+
+				JOptionPane.showMessageDialog(this, "You have specified " + lengthDiff
+						+ " more colors then lights. For this animation this is not possible.\r\n The excess colors have been removed.",
+						"Warning", JOptionPane.WARNING_MESSAGE);
+
 			}
 
 			// need to enrich array of colors with enough "off" entries, size of both arrays
