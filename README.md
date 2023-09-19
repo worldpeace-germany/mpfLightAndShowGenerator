@@ -24,7 +24,7 @@ Each LED in your setup needs to have a unique name, the easiest way is to have a
 For details on what you should enter refer to the [MPF light documentation](https://missionpinball.org/config/lights/). If you use LED strips the subtype would be `led` and depending on your type of LED the type would be something like `rgb`.
 
 ## Light Show Definition
-Once you have defined your lights you want to run a light show. There is already a [tool](https://missionpinball.org/tools/showcreator/) available to create light shows. The main reason why I wrote this tool is that I got the other Show Creator not to work on Linux, thus I had to come up with my own tool. If I just missed the obvious and it should work on Linux, feel free to comment on this [bug report](https://github.com/orgs/missionpinball/discussions/109). My tool here has a slightly different approach, so maybe both tools are useful.
+Once you have defined your lights you want to run a light show. There is already a [tool](https://missionpinball.org/tools/showcreator/) available to create light shows. The tool here has a slightly different approach, so maybe both tools are useful.
 
 ### Basic fundamental idea
 The basic idea of this tool is that you can break down a big light show into multiple smaller shows which run in parallel. For example, you might have multiple [illuminated star posts](https://pinside.com/pinball/market/shops/1254-cobra-amusements/08633-cobrapin-serial-rgb-led-star-post-light), each consists of 8 RGB LEDs. In one post all LEDs should flash alternating red and orange, in another a white LED light should run in circles. Using this tool you would be able to define these two shows (which can run in parallel) within seconds.
