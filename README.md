@@ -58,6 +58,8 @@ If you define the same show in a reversed order (colors reversed and LED lights 
 #### Color running in a circle
 This fourth mode is made mainly for lights positioned in a circle like beneath a star post, of course technically you can run that as well on a strip of lights. You define a set of lights (maximum amount of colors possible is equal the amount of lights you have). These colors will be applied to the LEDs and then turn in circles.
 
+<img src="gifs/5.gif" alt="animation5" width="200"/>
+
 ### Detailed field description
 The screen to define a light show looks like this
 
