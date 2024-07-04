@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Constants {
 	
-	public static String version = "0.1.1";
+	public static String version = "0.1.3";
 	
 	public static List<String> colorNames = Arrays.asList(
 			
