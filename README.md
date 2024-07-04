@@ -11,7 +11,7 @@ A somewhat empty screen comes up, from the main menu select what type of file yo
 But first read on, to understand some details.
 
 ## Light Definition
-Before your can run a light show you need to define your [lights](https://missionpinball.org/mechs/lights/).  You can either define every single light, which is lots of typing work or you can define a full light strip. If you define a light strip, then it seems that you cannot address a single light on it. (Or I have not figured out how to do it, feel free to comment on this [issue report](https://github.com/orgs/missionpinball/discussions/46).) This is basically why I wrote this part of the tool.
+Before your can run a light show you need to define your [lights](https://missionpinball.org/mechs/lights/).  You can either define every single light, which is lots of typing work or you can define a full light strip. If you want to define each light, then you can use the use this tool. Initially it was not documented on mpf how to access a single LED of a `light_stripe` which made it necessary to define all lights as single lights. With the update of the mpf documentation that problem has eased and in most cases it is probably sufficient to define your light strips.
 
 ### Detailed field description
 
@@ -69,7 +69,7 @@ The screen to define a light show looks like this
 Basically the same as said for the light definition about these fields holds true for the show definition as well. So first read the section above about these fields in the light definition section. Please note a few things which are different
 
 * The end range value can be lower than the start range value, depending on what end of your LED strip the effect should start.
-* You need to use the prefix and postfix fields in a way that they match the names of your lights.
+* You need to use the prefix and postfix fields in a way that they match the names of your lights. If you have lights defined via `light_stripes` and you called your strip "led-strip" then the prefix would be `led-strip_light_` (so add a `_light_` to your name that is how mpf does address a single LED). You can as well us tags you have used, if you for example have two flasher domes with each 8 LEDs, you can give them the flasherDome0 and flasherDome1, then use as prefix "flasherDome" and you can address the full flasher dome as a single light and create light effects between the two domes.
 
 #### LED numbers
 You most likely use for your show only a subset of lights, you typically have the range not covering all your lights, but only a few, e.g. a certain light strip. In that field you can enter a various formats to specify the light ids which will be used to combine with your light strip prefix and postfix value.
@@ -81,10 +81,10 @@ You most likely use for your show only a subset of lights, you typically have th
 In most cases you probably enter a simple range, but that depends on your setup. Note, that you can enter a range from a higher to a lower number. That might be important for some animations if you want to have them started on the other end of the strip.
 
 #### Step Time and Fade Time
-Both fields need to contain a time value. [Step time](https://missionpinball.org/shows/format) defines how long it takes until the next step in your animation is started. [Fade time](https://missionpinball.org/config/light_player/#fade) describes how much time is being used to fade the LED to the next color.
+Both fields need to contain a time value, including a time unit. [Step time](https://missionpinball.org/shows/format) defines how long it takes until the next step in your animation is started. [Fade time](https://missionpinball.org/config/light_player/#fade) describes how much time is being used to fade the LED to the next color.
 
 #### Light Pattern
-A list of light values separated by a ";". Each entry should define a certain color, MPF allows the specification via a well known HTML color name, e.g. `LightSalmon`, or a hex RGB value, e.g. `#FFA07A` or a hex RGB with a brightness value, e.g. `#FFA07A%60`. Note, RGB definitions like `[255, 160, 122]` are not supported for a `light_player`. Keep in mind that `on` and `off` are as well valid values, especially `off` can be very handy. You can use the validate button to do a check if the pattern has some obvious errors. Since for example MPF allows you to define own color names, the reported problems are not always a real problem. Check carefully and if you are sure that the reported issue is non, then continue.
+A list of light values separated by a ";". Each entry should define a certain color, MPF allows the specification via a well known HTML color name, e.g. `LightSalmon`, or a hex RGB value, e.g. `FFA07A` or a hex RGB with a brightness value, e.g. `FFA07A%60`. Note, RGB definitions like `[255, 160, 122]` are not supported for a `light_player`. Keep in mind that `on` and `off` are as well valid values, especially `off` can be very handy. You can use the validate button to do a check if the pattern has some obvious errors. Since for example MPF allows you to define own color names, the reported problems are not always a real problem. Check carefully and if you are sure that the reported issue is non, then continue.
 
 #### Animation
 The different animations have been explained in detail further above, just select the type of animation you would like to use.
