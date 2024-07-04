@@ -33,6 +33,15 @@ import javax.swing.SpringLayout;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.AbstractDocument;
 
+
+
+/*
+ * TODO:
+ * - time must have a unit
+ * - brightness with html name
+ * */
+
+
 public class Application extends JFrame implements ActionListener {
 
 	List<Integer> ledNumbers = new ArrayList<Integer>(); // the final array we need to loop over when writing the file
@@ -411,17 +420,22 @@ public class Application extends JFrame implements ActionListener {
 					emptyArrayField = true;
 					break;
 				}
-
+				// decimal RGB values are not supported in light players, so not checking for these (e.g. [20,40,50])
 				// checks if field is a well known CSS color name, or "off"/"on"
 				boolean contains = Constants.colorNames.contains(light);
 
 				if (!contains) {
 					// if a not a color name, check for hex color code
-					boolean isHex = light.matches("#?[0-9a-fA-F]{6}"); // should be a 6 digit hex number
-
-					if (!isHex) {
+					boolean isHex = light.matches("[0-9a-fA-F]{6}");
+					boolean maybeHex = light.matches("[0-9a-fA-F]{6}%.*"); // should be a 6 digit hex number no # in front since a comment in yaml
+					
+					if(light.substring(0, 1).equalsIgnoreCase("#"))
+					{
+						problems = problems + "- Don't start your colors with a #, this would be a yaml comment: " + light + "\r\n";
+					}
+					
+					if (!isHex && maybeHex) {
 						int posBrightness = light.indexOf("%");
-						if (posBrightness > 5) { // could be a hex value with brightness
 							String brightness = light.substring(posBrightness + 1, light.length());
 							try {
 								Integer brightnessValue = Integer.valueOf(brightness);
@@ -431,10 +445,9 @@ public class Application extends JFrame implements ActionListener {
 							} catch (NumberFormatException e1) {
 								problems = problems + "- Problem with the brightness value, brightness must be a number: " + light + "\r\n";
 							}
-
-						} else {
-							problems = problems + "- This doesn't seem to be a known color code: " + light + "\r\n";
-						}
+					}
+					if (!isHex && !maybeHex && !light.substring(0, 1).equalsIgnoreCase("#")) {
+						problems = problems + "- This doesn't seem to be a known color code: " + light + "\r\n";
 					}
 				}
 			}
@@ -566,8 +579,8 @@ public class Application extends JFrame implements ActionListener {
 				}
 
 				writer.write("# Generation of yaml file for light show\r\n");
-				writer.write("# LED array: " + ledNumbers.toString() + "\r\n");
-				writer.write("# Color array: " + lightPatternField.getText() + "\r\n");
+				writer.write("# LED array: " + ledNumbers.toString().replace(",", ";") + "\r\n");
+				writer.write("# Color array: " + lightPatternField.getText().replace(",", ";") + "\r\n");
 				writer.write("\r\n");
 
 				int animationId = animationCombo.getSelectedIndex();
