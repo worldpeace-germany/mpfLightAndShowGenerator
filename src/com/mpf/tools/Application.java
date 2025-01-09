@@ -37,7 +37,6 @@ import javax.swing.text.AbstractDocument;
 
 /*
  * TODO:
- * - time must have a unit
  * - brightness with html name
  * */
 
@@ -425,7 +424,7 @@ public class Application extends JFrame implements ActionListener {
 				boolean contains = Constants.colorNames.contains(light);
 
 				if (!contains) {
-					// if a not a color name, check for hex color code
+					// if not a color name, check for hex color code
 					boolean isHex = light.matches("[0-9a-fA-F]{6}");
 					boolean maybeHex = light.matches("[0-9a-fA-F]{6}%.*"); // should be a 6 digit hex number no # in front since a comment in yaml
 					
