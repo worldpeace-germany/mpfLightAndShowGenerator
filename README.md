@@ -78,7 +78,7 @@ You most likely use for your show only a subset of lights, you typically have th
 * If you want to specify a range to cover all numbers, enter for example `1-30`
 * Mix and combine the above options, e.g. `1; 5-20; 3; 33-29 `
 
-In most cases you probably enter a simple range, but that depends on your setup. Note, that you can enter a range from a higher to a lower number. That might be important for some animations if you want to have them started on the other end of the strip.
+In most cases you probably enter a simple range, but that depends on your setup. Note, that you can enter a range from a higher to a lower number. That might be important for some animations if you want to have them started on the other end of the strip. Please note as well that the numbering of the LEDs start with 0 and not 1.
 
 #### Step Time and Fade Time
 Both fields need to contain a time value, including a time unit. [Step time](https://missionpinball.org/shows/format) defines how long it takes until the next step in your animation is started. [Fade time](https://missionpinball.org/config/light_player/#fade) describes how much time is being used to fade the LED to the next color.
